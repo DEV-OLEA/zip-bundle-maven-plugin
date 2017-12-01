@@ -19,7 +19,7 @@
 
   <groupId>com.maestrodev</groupId>
   <artifactId>zip-bundle-maven-plugin</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>3.1</version>
   <packaging>maven-plugin</packaging>
 
   <name>ZIP Bundle Maven Plugin</name>
@@ -32,9 +32,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  <prerequisites>
-    <maven>2.2.1</maven>
-  </prerequisites>
 
   <scm>
     <connection>scm:git:ssh://git@github.com/maestrodev/zip-bundle-maven-plugin.git</connection>
@@ -63,18 +60,7 @@
     </repository>
   </repositories>
 
-  <distributionManagement>
-    <repository>
-      <id>maestro-deploy</id>
-      <name>Public Releases Repository</name>
-      <url>https://repo.maestrodev.com/archiva/repository/ZIP.Bundle.Maven.Plugin.releases</url>
-    </repository>
-    <snapshotRepository>
-      <id>maestro-deploy</id>
-      <name>Public Snapshots Repository</name>
-      <url>https://repo.maestrodev.com/archiva/repository/ZIP.Bundle.Maven.Plugin.snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
+  <distributionManagement> 		<!-- This part is used for uploading artifact we create (with mvn deploy) 			see https://maven.apache.org/pom.html#Repository and http://archiva.apache.org/docs/2.1.1/userguide/deploy.html --> 		<repository> 			<id>archiva.internal</id> 			<name>Internal Release Repository</name> 			<url>http://centos-dev:8090/repository/internal/</url> 		</repository> 		<snapshotRepository> 			<id>archiva.snapshots</id> 			<name>Internal Snapshot Repository</name> 			<url>http://centos-dev:8090/repository/snapshots/</url> 		</snapshotRepository> 	</distributionManagement>
 
   <issueManagement>
     <system>github</system>
@@ -95,76 +81,18 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.0</version>
+        <version>3.5</version>
         <configuration>
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
         </configuration>
       </plugin>
-      <!-- Currently too strict for a Plugin with no MOJOs
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-docck-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>docck-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <offline>true</offline>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      -->
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.2.2</version>
-        <configuration>
-          <goals>deploy site</goals>
-          <arguments>-Pgithub-site</arguments>
-        </configuration>
+        <version>2.5.3</version>
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>github-site</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.github.github</groupId>
-            <artifactId>site-maven-plugin</artifactId>
-            <version>0.7-SNAPSHOT</version>
-            <configuration>
-              <message>Creating site for ${project.version}</message>
-              <server>github</server>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>site</goal>
-                </goals>
-                <phase>site</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.0</version>
-      </plugin>
-    </plugins>
-  </reporting>
 
 </project>
